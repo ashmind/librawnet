@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 
-namespace LibRaw.Native {
-    [StructLayout(LayoutKind.Explicit)]
+namespace LibRawNet.Native {
+    /// <summary>
+    /// This structure (actually, a bit field) describes the source of color data
+    /// for each field of structure <see cref="libraw_colordata_t" />, which may be obtained from 
+    /// different data sources.
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit, Size = 5 * 3)]
     public struct color_data_state_t {
-        uint curve_state        : 3;
-        uint rgb_cam_state      : 3;
-        uint cmatrix_state      : 3;
-        uint pre_mul_state      : 3;
-        uint cam_mul_state      : 3;
+        [FieldOffset(0 * 3)]
+        public uint curve_state;
+
+        [FieldOffset(1 * 3)]
+        public uint rgb_cam_state;
+
+        [FieldOffset(2 * 3)]
+        public uint cmatrix_state;
+
+        [FieldOffset(3 * 3)]
+        public uint pre_mul_state;
+
+        [FieldOffset(4 * 3)]
+        public uint cam_mul_state;
     }
 }

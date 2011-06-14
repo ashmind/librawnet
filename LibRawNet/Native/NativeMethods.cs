@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security;
 using System.Runtime.InteropServices;
 
-namespace LibRaw.Native {
+namespace LibRawNet.Native {
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods {
         [DllImport("libraw")]
-        IntPtr libraw_init(uint flags);
+        public static extern IntPtr libraw_init(uint flags);
 
         [DllImport("libraw")]
-        public extern int libraw_open_file(IntPtr data, string fileName);
+        public static extern int libraw_open_file(IntPtr data, string fileName);
 
         [DllImport("libraw")]
-        public extern int libraw_unpack(IntPtr data);
+        public static extern int libraw_unpack(IntPtr data);
 
         [DllImport("libraw")]
-        public extern int libraw_close(IntPtr data);
+        public static extern int libraw_close(IntPtr data);
     }
 }

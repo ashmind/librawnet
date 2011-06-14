@@ -8,8 +8,8 @@
     <ProjectGuid>{16A62E87-6A29-456B-AD1D-76C00D118576}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibRaw</RootNamespace>
-    <AssemblyName>LibRaw</AssemblyName>
+    <RootNamespace>LibRawNet</RootNamespace>
+    <AssemblyName>LibRawNet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,14 +42,17 @@
     <Compile Include="Native\color_data_state_t.cs" />
     <Compile Include="Native\libraw_colordata_t.cs" />
     <Compile Include="Native\libraw_data_t.cs" />
+    <Compile Include="Native\LibRaw_filtering.cs" />
     <Compile Include="Native\libraw_image_sizes_t.cs" />
     <Compile Include="Native\libraw_imgother_t.cs" />
     <Compile Include="Native\libraw_iparams_t.cs" />
     <Compile Include="Native\libraw_masked_t.cs" />
+    <Compile Include="Native\libraw_output_params_t.cs" />
     <Compile Include="Native\LibRaw_thumbnail_formats.cs" />
     <Compile Include="Native\libraw_thumbnail_t.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\ph1_t.cs" />
+    <Compile Include="Native\pixel_data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

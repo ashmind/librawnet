@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace LibRaw.Native {
+namespace LibRawNet.Native {
     /// <summary>Main Data Structure of LibRaw</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct libraw_data_t {
@@ -32,9 +32,9 @@ namespace LibRaw.Native {
         public libraw_masked_t masked_pixels;
             
         ///// <summary>The memory area that contains the image pixels per se. It is filled when unpack() is called.</summary>
-        //public ushort (*image)[4];
+        public pixel_data[] image;
 
         ///// <summary>Data structure intended for management of image postprocessing (using the dcraw emulator).</summary>
-        //public libraw_output_params_t @params;
+        public libraw_output_params_t @params;
     }
 }
