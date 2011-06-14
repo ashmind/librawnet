@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibRawNet", "LibRawNet\LibRawNet.csproj", "{16A62E87-6A29-456B-AD1D-76C00D118576}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raw2Any", "Raw2Jpeg\Raw2Any.csproj", "{67EF1B86-A8E8-4270-9AE6-429BB242F035}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raw2Any", "Raw2Any\Raw2Any.csproj", "{67EF1B86-A8E8-4270-9AE6-429BB242F035}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
