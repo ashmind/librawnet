@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibRawNet.Native {
@@ -31,12 +30,6 @@ namespace LibRawNet.Native {
         /// </summary>
         public ushort left_margin;
         
-        /// <summary> Width (in pixels) of bottom part of masked pixels area.</summary>
-        public ushort bottom_margin;
-
-        /// <summary> Width (in pixels) of right part of masked pixels area.</summary>
-        public ushort right_margin;
-
         /// <summary>
         /// Height of the output image (may differ from height for cameras that require
         /// image rotation or have non-square pixels).
@@ -64,5 +57,11 @@ namespace LibRawNet.Native {
         /// ).
         /// </summary>
         public int flip;
+
+        /// <summary> Width (in pixels) of right part of masked pixels area.</summary>
+        public ushort right_margin;
+
+        /// <summary> Width (in pixels) of bottom part of masked pixels area.</summary>
+        public ushort bottom_margin;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibRawNet.Native {
@@ -29,11 +28,11 @@ namespace LibRawNet.Native {
         public uint[] gpsdata;
 
         /// <summary> Image description. </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
-        public char[] desc;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        public string desc;
 
         /// <summary> Author of image. </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public char[] artist;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string artist;
     }
 }

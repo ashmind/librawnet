@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibRawNet.Native {
@@ -8,10 +7,10 @@ namespace LibRawNet.Native {
     [StructLayout(LayoutKind.Sequential)]
     internal struct libraw_data_t {
         /// <summary>This field records the past phases of image processing.</summary>
-        public uint progress_flags;
+        public LibRaw_progress progress_flags;
 
         /// <summary>This field records suspicious situations (warnings) that have emerged during image processing.</summary>
-        public uint progress_flags_2;
+        public LibRaw_warnings progress_warnings;
 
         /// <summary>The structure describes the main image parameters retrieved from the RAW file.</summary>
         public libraw_iparams_t idata;
@@ -22,19 +21,22 @@ namespace LibRawNet.Native {
         /// <summary>The structure contains color data retrieved from the file.</summary>
         public libraw_colordata_t color;
 
-        ///// <summary>Data structure for information purposes: it contains the image parameters that have been extracted from the file but are not needed in further file processing.</summary>
+        /// <summary>Data structure for information purposes: it contains the image parameters that have been extracted from the file but are not needed in further file processing.</summary>
         public libraw_imgother_t other;
 
-        ///// <summary>Data structure containing information on the preview and the preview data themselves. All fields of this structure but thumbnail itself are filled when open_file() is called. Thumbnail readed by unpack_thumb() call.</summary>
+        /// <summary>Data structure containing information on the preview and the preview data themselves. All fields of this structure but thumbnail itself are filled when open_file() is called. Thumbnail readed by unpack_thumb() call.</summary>
         public libraw_thumbnail_t thumbnail;
 
-        ///// <summary>Structure containing pixel data for black (masked) border pixels. It is filled when unpack() is called.</summary>
+        /// <summary>Structure containing pixel data for black (masked) border pixels. It is filled when unpack() is called.</summary>
         public libraw_masked_t masked_pixels;
             
-        ///// <summary>The memory area that contains the image pixels per se. It is filled when unpack() is called.</summary>
-        public pixel_data[] image;
+        /// <summary>The memory area that contains the image pixels per se. It is filled when unpack() is called.</summary>
+        public IntPtr image;
 
-        ///// <summary>Data structure intended for management of image postprocessing (using the dcraw emulator).</summary>
+        /// <summary>Data structure intended for management of image postprocessing (using the dcraw emulator).</summary>
         public libraw_output_params_t @params;
+
+        /// <summary> ??? </summary>
+        public IntPtr parent_class;
     }
 }

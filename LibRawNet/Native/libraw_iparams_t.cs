@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibRawNet.Native {
@@ -20,6 +19,9 @@ namespace LibRawNet.Native {
 
         /// <summary>DNG version (for the DNG format).</summary>
         public uint dng_version;
+
+        /// <summary> ? </summary>
+        public uint is_foveon;
 
         /// <summary>Number of colors in the file.</summary>
         public int colors;

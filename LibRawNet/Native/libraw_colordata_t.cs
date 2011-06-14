@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace LibRawNet.Native {
@@ -15,14 +14,6 @@ namespace LibRawNet.Native {
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8 * 8)]
         public ushort[] white; //[8][8];
-
-        /// <summary>
-        /// Camera RGB - XYZ conversion matrix. This matrix is constant (different for 
-        /// different models). Last row is zero for RGB cameras and non-zero for different
-        /// color models (CMYG and so on).
-        /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4 * 3)]
-        public float[] cam_xyz; //[4][3];
 
         /// <summary>
         /// White balance coefficients (as shot). Either read from file or calculated.
@@ -48,6 +39,14 @@ namespace LibRawNet.Native {
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3 * 4)]
         public float[] rgb_cam; //[3][4];
+
+        /// <summary>
+        /// Camera RGB - XYZ conversion matrix. This matrix is constant (different for 
+        /// different models). Last row is zero for RGB cameras and non-zero for different
+        /// color models (CMYG and so on).
+        /// </summary>
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4 * 3)]
+        public float[] cam_xyz; //[4][3];
 
         /// <summary>
         /// Camera tone curve, read from file for Nikon, Sony and some other cameras.
@@ -93,8 +92,8 @@ namespace LibRawNet.Native {
         public float canon_ev;
 
         /// <summary> Firmware revision (for some cameras). </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] model2;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string model2;
 
         /// <summary> Pointer to the retrieved ICC profile (if it is present in the RAW file). </summary>
         public IntPtr profile;
