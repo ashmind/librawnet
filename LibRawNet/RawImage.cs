@@ -27,7 +27,9 @@ namespace LibRawNet {
         }
 
         public static RawImage FromFile(string fileName) {
-            var dataPtr = NativeMethods.libraw_init(0);
+            var dataPtr = NativeMethods.libraw_init(
+                LibRaw_constructor_flags.LIBRAW_OPIONS_NO_DATAERR_CALLBACK | LibRaw_constructor_flags.LIBRAW_OPIONS_NO_MEMERR_CALLBACK
+            );
             if (dataPtr == IntPtr.Zero)
                 throw new LibRawNativeException("libraw_init returned NULL pointer.");
 

@@ -7,7 +7,7 @@ namespace LibRawNet.Native {
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeMethods {
         [DllImport("libraw")]
-        public static extern IntPtr libraw_init(uint flags);
+        public static extern IntPtr libraw_init(LibRaw_constructor_flags flags);
 
         [DllImport("libraw")]
         public static extern int libraw_open_file(IntPtr data, string fileName);

@@ -51,7 +51,7 @@ namespace LibRawNet.Native {
         /// <summary>
         /// Camera tone curve, read from file for Nikon, Sony and some other cameras.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x4001)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 0x10000)]
         public ushort[] curve; //[0x4001];
 
         /// <summary>
