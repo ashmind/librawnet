@@ -22,6 +22,6 @@ namespace LibRawNet.Native {
         public static extern int libraw_dcraw_process(IntPtr lr);
 
         [DllImport("libraw")]
-        public static extern IntPtr libraw_dcraw_make_mem_image(IntPtr data);
+        public static extern IntPtr libraw_dcraw_make_mem_image(IntPtr data, out int errc);
     }
 }

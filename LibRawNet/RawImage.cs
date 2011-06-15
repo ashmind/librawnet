@@ -11,8 +11,8 @@ namespace LibRawNet {
 
     public class RawImage : IDisposable {
         private static readonly IDictionary<int, PixelFormat> PixelFormats = new Dictionary<int, PixelFormat> {
-            {  8, PixelFormat.Format24bppRgb },
-            { 16, PixelFormat.Format48bppRgb }
+            { 24, PixelFormat.Format24bppRgb },
+            { 48, PixelFormat.Format48bppRgb }
         };
 
         private static readonly IDictionary<LibRaw_errors, Func<Exception, Exception>> ErrorWrappers = new Dictionary<LibRaw_errors, Func<Exception, Exception>> {
@@ -33,13 +33,13 @@ namespace LibRawNet {
             if (dataPtr == IntPtr.Zero)
                 throw new LibRawNativeException("libraw_init returned NULL pointer.");
 
-            CallWithErrorHandling(
+            ProcessResult(
                 NativeMethods.libraw_open_file(dataPtr, fileName)
             );
             return new RawImage(dataPtr);
         }
 
-        private static void CallWithErrorHandling(int result) {
+        private static void ProcessResult(int result) {
             if (result == 0)
                 return;
 
@@ -53,18 +53,23 @@ namespace LibRawNet {
 
         public Bitmap ToBitmap() {
             if (!this.processed) {
-                CallWithErrorHandling(NativeMethods.libraw_unpack(this.dataPtr));
-                CallWithErrorHandling(NativeMethods.libraw_dcraw_process(this.dataPtr));
+                ProcessResult(NativeMethods.libraw_unpack(this.dataPtr));
+                ProcessResult(NativeMethods.libraw_dcraw_process(this.dataPtr));
                 this.processed = true;
             }
 
-            var imagePtr = NativeMethods.libraw_dcraw_make_mem_image(this.dataPtr);
+            var error = 0;
+            var imagePtr = NativeMethods.libraw_dcraw_make_mem_image(this.dataPtr, out error);
+            ProcessResult(error);
+
             var imageData = (libraw_processed_image_t)Marshal.PtrToStructure(imagePtr, typeof(libraw_processed_image_t));
-            
+            var bpp = imageData.colors * imageData.bits;
+            var bytesPerPixel = (bpp + 7) / 8;
+
             return new Bitmap(
                 imageData.width, imageData.height,
-                imageData.width * imageData.colors * (imageData.bits / 8),
-                PixelFormats[imageData.bits], imageData.data
+                 4 * ((imageData.width * bytesPerPixel + 3) / 4),
+                PixelFormats[bpp], imageData.data
             );
         }
 
