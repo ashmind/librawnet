@@ -10,6 +10,11 @@ namespace LibRawNet.Native {
         public ushort colors;
         public ushort bits;
         public uint data_size;
-        public IntPtr data;
+        
+        public IntPtr data(IntPtr structPtr) {
+            return new IntPtr(
+                structPtr.ToInt32() + Marshal.SizeOf(typeof(libraw_processed_image_t))
+            );
+        }
     }
 }

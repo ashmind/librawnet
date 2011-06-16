@@ -69,7 +69,7 @@ namespace LibRawNet {
             return new Bitmap(
                 imageData.width, imageData.height,
                  4 * ((imageData.width * bytesPerPixel + 3) / 4),
-                PixelFormats[bpp], imageData.data
+                PixelFormats[bpp], imageData.data(imagePtr)
             );
         }
 
