@@ -67,6 +67,10 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\LibRawBitmapDataStream.cs" />
+    <Compile Include="Internal\AbstractBitmapDataStream.cs" />
+    <Compile Include="Internal\BmpBitmapStream.cs" />
+    <Compile Include="Internal\UnmanagedBgrBitmapDataStream.cs" />
     <Compile Include="Native\LibRaw_constructor_flags.cs" />
     <Compile Include="Native\LibRaw_errors.cs" />
     <Compile Include="Native\LibRawNativeException.cs" />

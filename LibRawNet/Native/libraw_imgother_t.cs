@@ -18,7 +18,7 @@ namespace LibRawNet.Native {
         public float focal_len;
 
         /// <summary> Date of shooting. </summary>
-        public IntPtr timestamp;
+        public long timestamp;
 
         /// <summary> Serial number of image. </summary>
         public uint shot_order;

@@ -12,9 +12,21 @@ namespace Raw2Any {
                 var rawFileName = args[0];
                 var pngFileName = Path.ChangeExtension(rawFileName, "png");
 
-                using (var raw = RawImage.FromFile(rawFileName))
-                using (var bitmap = raw.ToBitmap()) {
-                    bitmap.Save(pngFileName, ImageFormat.Png);
+                //using (var raw = RawImage.FromFile(rawFileName))
+                //using (var bitmap = raw.ToBitmap()) {
+                //    bitmap.Save(pngFileName, ImageFormat.Png);
+                //}
+                var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(rawFileName);
+
+                using (var raw = RawImage.FromFile(rawFileName)) {
+                    using (var bitmapStream = raw.ToBitmapStream())
+                    using (var target = File.Create(fileNameWithoutExtension + "_stream.bmp")) {
+                        bitmapStream.CopyTo(target);
+                    }
+
+                    //using (var bitmap = raw.ToBitmap()) {
+                    //    bitmap.Save(fileNameWithoutExtension + "_mem.bmp", ImageFormat.Bmp);
+                    //}
                 }
             }
             catch (Exception ex) {

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
 
+using LibRawNet.Internal;
 using LibRawNet.Native;
 
 namespace LibRawNet {
@@ -51,26 +53,52 @@ namespace LibRawNet {
             throw ex;
         }
 
-        public Bitmap ToBitmap() {
-            if (!this.processed) {
-                ProcessResult(NativeMethods.libraw_unpack(this.dataPtr));
-                ProcessResult(NativeMethods.libraw_dcraw_process(this.dataPtr));
-                this.processed = true;
-            }
-
+        public Stream ToBitmapStream() {
+            this.EnsureProcessed();
+            //return new BmpBitmapStream(new LibRawBitmapDataStream(GetStructure<libraw_data_t>(this.dataPtr)));
+            
             var error = 0;
             var imagePtr = NativeMethods.libraw_dcraw_make_mem_image(this.dataPtr, out error);
             ProcessResult(error);
 
-            var imageData = (libraw_processed_image_t)Marshal.PtrToStructure(imagePtr, typeof(libraw_processed_image_t));
-            var bpp = imageData.colors * imageData.bits;
-            var bytesPerPixel = (bpp + 7) / 8;
+            var imageData = GetStructure<libraw_processed_image_t>(imagePtr);
 
-            return new Bitmap(
-                imageData.width, imageData.height,
-                 4 * ((imageData.width * bytesPerPixel + 3) / 4),
-                PixelFormats[bpp], imageData.data(imagePtr)
-            );
+            var data = GetStructure<libraw_data_t>(this.dataPtr);
+            var bpp = data.idata.colors * data.@params.output_bps;
+
+            return new BmpBitmapStream(new UnmanagedBgrBitmapDataStream(
+                imageData.data(imagePtr), new Size(imageData.width, imageData.height), bpp
+            ));
+        }
+
+        public Bitmap ToBitmap() {
+            return new Bitmap(this.ToBitmapStream());
+        }
+
+        private void EnsureProcessed() {
+            if (this.processed)
+                return;
+
+            ProcessResult(NativeMethods.libraw_unpack(this.dataPtr));
+            this.ChangeData(data => {
+                data.@params.use_camera_wb = 1;
+                return data;
+            });
+
+            ProcessResult(NativeMethods.libraw_dcraw_process(this.dataPtr));
+            this.processed = true;
+        }
+
+        private void ChangeData(Func<libraw_data_t, libraw_data_t> change) {
+            var data = GetStructure<libraw_data_t>(this.dataPtr);
+            data = change(data);
+            Marshal.StructureToPtr(data, this.dataPtr, true);
+        }
+
+        private static T GetStructure<T>(IntPtr ptr)
+            where T : struct
+        {
+            return (T)Marshal.PtrToStructure(ptr, typeof (T));
         }
 
         public void Dispose() {

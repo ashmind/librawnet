@@ -3,24 +3,19 @@ using System.Runtime.InteropServices;
 namespace LibRawNet.Native {
     [StructLayout(LayoutKind.Sequential)]
     public struct libraw_output_params_t {
-        /// unsigned int[4]
-        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 4, ArraySubType = UnmanagedType.U4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public uint[] greybox;
 
-        /// unsigned int[4]
-        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 4, ArraySubType = UnmanagedType.U4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public uint[] cropbox;
 
-        /// double[4]
-        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 4, ArraySubType = UnmanagedType.R8)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public double[] aber;
 
-        /// double[6]
-        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 6, ArraySubType = UnmanagedType.R8)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public double[] gamm;
 
-        /// float[4]
-        [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 4, ArraySubType = UnmanagedType.R4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
         public float[] user_mul;
 
         public uint shot_select;
@@ -35,16 +30,16 @@ namespace LibRawNet.Native {
         public int use_camera_matrix;
         public int output_color;
 
-        [MarshalAsAttribute(UnmanagedType.LPStr)]
+        [MarshalAs(UnmanagedType.LPStr)]
         public string output_profile;
 
-        [MarshalAsAttribute(UnmanagedType.LPStr)]
+        [MarshalAs(UnmanagedType.LPStr)]
         public string camera_profile;
 
-        [MarshalAsAttribute(UnmanagedType.LPStr)]
+        [MarshalAs(UnmanagedType.LPStr)]
         public string bad_pixels;
 
-        [MarshalAsAttribute(UnmanagedType.LPStr)]
+        [MarshalAs(UnmanagedType.LPStr)]
         public string dark_frame;
 
         public int output_bps;

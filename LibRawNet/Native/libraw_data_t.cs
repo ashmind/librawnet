@@ -36,7 +36,7 @@ namespace LibRawNet.Native {
         /// <summary>Data structure intended for management of image postprocessing (using the dcraw emulator).</summary>
         public libraw_output_params_t @params;
 
-        /// <summary> ??? </summary>
-        public IntPtr parent_class;
+        ///// <summary> ??? </summary>
+        //public IntPtr parent_class;
     }
 }
