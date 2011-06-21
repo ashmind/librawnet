@@ -67,12 +67,15 @@ namespace LibRawNet {
             var bpp = data.idata.colors * data.@params.output_bps;
 
             return new BmpBitmapStream(new UnmanagedBgrBitmapDataStream(
-                imageData.data(imagePtr), new Size(imageData.width, imageData.height), bpp
+                imageData.data(imagePtr), new Size(imageData.width, imageData.height), bpp,
+                () => ProcessResult(NativeMethods.libraw_dcraw_clear_mem(imagePtr))
             ));
         }
 
         public Bitmap ToBitmap() {
-            return new Bitmap(this.ToBitmapStream());
+            using (var stream = this.ToBitmapStream()) {
+                return new Bitmap(stream);
+            }
         }
 
         private void EnsureProcessed() {

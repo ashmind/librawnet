@@ -14,6 +14,7 @@ namespace LibRawNet.Internal {
         private readonly IntPtr dataPtr;
         private readonly Size bitmapSize;
         private readonly int bitsPerPixel;
+        private readonly Action dispose;
 
         private int row;
         private int column;
@@ -22,10 +23,11 @@ namespace LibRawNet.Internal {
         private byte? savedBlue;
         private byte? savedGreen;
 
-        public UnmanagedBgrBitmapDataStream(IntPtr dataPtr, Size bitmapSize, int bitsPerPixel) {
+        public UnmanagedBgrBitmapDataStream(IntPtr dataPtr, Size bitmapSize, int bitsPerPixel, Action dispose) {
             this.dataPtr = dataPtr;
             this.bitmapSize = bitmapSize;
             this.bitsPerPixel = bitsPerPixel;
+            this.dispose = dispose;
         }
 
         public override Size BitmapSize {
@@ -104,6 +106,15 @@ namespace LibRawNet.Internal {
             }
 
             return availableCount;
+        }
+
+        protected override void Dispose(bool disposing) {
+            try {
+                this.dispose();
+            }
+            finally {
+                base.Dispose(disposing);
+            }
         }
 
         #region Unsupported

@@ -19,14 +19,14 @@ namespace Raw2Any {
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(rawFileName);
 
                 using (var raw = RawImage.FromFile(rawFileName)) {
-                    using (var bitmapStream = raw.ToBitmapStream())
-                    using (var target = File.Create(fileNameWithoutExtension + "_stream.bmp")) {
-                        bitmapStream.CopyTo(target);
-                    }
-
-                    //using (var bitmap = raw.ToBitmap()) {
-                    //    bitmap.Save(fileNameWithoutExtension + "_mem.bmp", ImageFormat.Bmp);
+                    //using (var bitmapStream = raw.ToBitmapStream())
+                    //using (var target = File.Create(fileNameWithoutExtension + "_stream.bmp")) {
+                    //    bitmapStream.CopyTo(target);
                     //}
+
+                    using (var bitmap = raw.ToBitmap()) {
+                        bitmap.Save(fileNameWithoutExtension + "_mem.bmp", ImageFormat.Bmp);
+                    }
                 }
             }
             catch (Exception ex) {

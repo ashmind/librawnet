@@ -36,6 +36,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\Action.cs" />
     <Compile Include="Internal\LibRawBitmapDataStream.cs" />
     <Compile Include="Internal\AbstractBitmapDataStream.cs" />
     <Compile Include="Internal\BmpBitmapStream.cs" />
