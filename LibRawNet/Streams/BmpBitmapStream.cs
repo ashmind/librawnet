@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace LibRawNet.Internal {
+namespace LibRawNet.Streams {
     internal class BmpBitmapStream : Stream {
         private readonly AbstractBitmapDataStream dataStream;
         private readonly byte[] header;

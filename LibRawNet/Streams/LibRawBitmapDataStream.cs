@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+
 using LibRawNet.Native;
 
-namespace LibRawNet.Internal {
+namespace LibRawNet.Streams {
     internal class LibRawBitmapDataStream : AbstractBitmapDataStream {
         private readonly libraw_data_t data;
         private readonly int imageDataSize;

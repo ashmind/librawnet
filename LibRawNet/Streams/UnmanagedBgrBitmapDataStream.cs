@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace LibRawNet.Internal {
+using LibRawNet.Internal;
+
+namespace LibRawNet.Streams {
     internal class UnmanagedBgrBitmapDataStream : AbstractBitmapDataStream {
         private enum ColorPart {
             Blue,

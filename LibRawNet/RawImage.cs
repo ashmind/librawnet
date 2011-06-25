@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 
 using LibRawNet.Internal;
 using LibRawNet.Native;
+using LibRawNet.Streams;
 
 namespace LibRawNet {
     internal delegate TResult Func<in T, out TResult>(T arg1);
