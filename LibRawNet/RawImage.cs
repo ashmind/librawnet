@@ -55,21 +55,14 @@ namespace LibRawNet {
 
         public Stream ToBitmapStream() {
             this.EnsureProcessed();
-            //return new BmpBitmapStream(new LibRawBitmapDataStream(GetStructure<libraw_data_t>(this.dataPtr)));
-            
             var error = 0;
+            
+            // temporary gamma fix
             var imagePtr = NativeMethods.libraw_dcraw_make_mem_image(this.dataPtr, out error);
-            ProcessResult(error);
+            NativeMethods.libraw_dcraw_clear_mem(imagePtr);
+            // end of fix
 
-            var imageData = GetStructure<libraw_processed_image_t>(imagePtr);
-
-            var data = GetStructure<libraw_data_t>(this.dataPtr);
-            var bpp = data.idata.colors * data.@params.output_bps;
-
-            return new BmpBitmapStream(new UnmanagedBgrBitmapDataStream(
-                imageData.data(imagePtr), new Size(imageData.width, imageData.height), bpp,
-                () => ProcessResult(NativeMethods.libraw_dcraw_clear_mem(imagePtr))
-            ));
+            return new BmpBitmapStream(new LibRawBitmapDataStream(GetStructure<libraw_data_t>(this.dataPtr)));
         }
 
         public Bitmap ToBitmap() {

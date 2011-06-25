@@ -5,6 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibRawNet", "LibRawNet\LibR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raw2Any", "Raw2Any\Raw2Any.csproj", "{67EF1B86-A8E8-4270-9AE6-429BB242F035}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3A027B1-3E72-4A9E-8099-7A4E7DC92C0B}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +30,7 @@ Global
 		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Release|Any CPU.ActiveCfg = Release|x86
+		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Release|Any CPU.Build.0 = Release|x86
 		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{67EF1B86-A8E8-4270-9AE6-429BB242F035}.Release|Mixed Platforms.Build.0 = Release|x86
 	EndGlobalSection

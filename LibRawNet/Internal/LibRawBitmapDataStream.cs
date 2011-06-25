@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using LibRawNet.Native;
 
 namespace LibRawNet.Internal {
-    // this does not currently work
     internal class LibRawBitmapDataStream : AbstractBitmapDataStream {
         private readonly libraw_data_t data;
         private readonly int imageDataSize;
@@ -17,7 +16,7 @@ namespace LibRawNet.Internal {
         private int currentColorIndex;
         private int currentRowPadding;
         private readonly Size bitmapSize;
-
+        
         public LibRawBitmapDataStream(libraw_data_t data) {
             this.data = data;
             this.bitmapSize = (this.data.sizes.flip & 4) != 4 
@@ -30,7 +29,6 @@ namespace LibRawNet.Internal {
                 this.rowPadding = 0;
 
             this.imageDataSize = data.sizes.height * this.RowSize;
-            this.SourceOffset = this.FlipIndex(0, 0);
         }
 
         public override int BitsPerPixel {
@@ -66,8 +64,6 @@ namespace LibRawNet.Internal {
             set { throw new NotSupportedException(); }
         }
 
-        private int SourceOffset { get; set; }
-
         private int RowSize {
             get { return (this.bitmapSize.Width * this.BitsPerPixel / 8) + this.rowPadding; }
         }
@@ -77,44 +73,48 @@ namespace LibRawNet.Internal {
             var width = this.bitmapSize.Width;
 
             var bits = data.@params.output_bps;
-            if (bits != 8)
-                throw new NotSupportedException();
+            if (bits != 8 || colorCount != 3)
+                throw new NotImplementedException();
             
-            var cstep = this.FlipIndex(0, 1) - this.FlipIndex(0, 0);
-            var rstep = this.FlipIndex(1, 0) - this.FlipIndex(0, width); 
-
             var image = this.data.image;
             var bufferSubOffset = 0;
             for (; this.currentRow < this.bitmapSize.Height; this.currentRow += 1) {
+                var bmpBitmapRow = this.bitmapSize.Height - this.currentRow - 1; // BMPs are upside down
+
                 for (; this.currentColumn < width; this.currentColumn += 1) {
                     for (; this.currentColorIndex < colorCount; this.currentColorIndex += 1) {
-                        var @color = (ushort)Marshal.ReadInt16(image, (SourceOffset * 4 + this.currentColorIndex) * sizeof(short));
+                        var bgrColorIndex = colorCount - 1 - this.currentColorIndex;
+                        var bitmapOffset = this.GetSourceOffset(bmpBitmapRow, this.currentColumn);
+
+                        var @color = (ushort)Marshal.ReadInt16(image, (bitmapOffset * 4 + bgrColorIndex) * sizeof(short));
                         buffer[offset + bufferSubOffset] = (byte)(this.data.color.curve[@color] >> 8);
 
                         bufferSubOffset += 1;
-                        if (bufferSubOffset == count)
+                        if (bufferSubOffset == count) {
+                            this.currentColorIndex += 1; // loop will not increase it because we return
                             return count;
+                        }
                     }
 
                     this.currentColorIndex = 0;
-                    this.SourceOffset += cstep;
                 }
 
                 for (; this.currentRowPadding < this.rowPadding; this.currentRowPadding += 1) {
                     bufferSubOffset += 1;
-                    if (bufferSubOffset == count)
+                    if (bufferSubOffset == count) {
+                        this.currentRowPadding += 1; // loop will not increase it because we return
                         return count;
+                    }
                 }
 
                 this.currentColumn = 0;
                 this.currentRowPadding = 0;
-                this.SourceOffset += rstep;
             }
 
             return bufferSubOffset;
         }
 
-        private int FlipIndex(int row, int column) {
+        private int GetSourceOffset(int row, int column) {
             var size = this.data.sizes;
             var flip = this.data.sizes.flip;
 
