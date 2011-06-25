@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internal\Action.cs" />
+    <Compile Include="Internal\GammaAlgorithm.cs" />
     <Compile Include="Streams\LibRawBitmapDataStream.cs" />
     <Compile Include="Streams\AbstractBitmapDataStream.cs" />
     <Compile Include="Streams\BmpBitmapStream.cs" />

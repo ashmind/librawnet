@@ -56,13 +56,6 @@ namespace LibRawNet {
 
         public Stream ToBitmapStream() {
             this.EnsureProcessed();
-            var error = 0;
-            
-            // temporary gamma fix
-            var imagePtr = NativeMethods.libraw_dcraw_make_mem_image(this.dataPtr, out error);
-            NativeMethods.libraw_dcraw_clear_mem(imagePtr);
-            // end of fix
-
             return new BmpBitmapStream(new LibRawBitmapDataStream(GetStructure<libraw_data_t>(this.dataPtr)));
         }
 
@@ -83,13 +76,22 @@ namespace LibRawNet {
             });
 
             ProcessResult(NativeMethods.libraw_dcraw_process(this.dataPtr));
+            ChangeData(data => {
+                GammaAlgorithm.Histogram(data);
+                return data;
+            });
+
             this.processed = true;
         }
 
         private void ChangeData(Func<libraw_data_t, libraw_data_t> change) {
-            var data = GetStructure<libraw_data_t>(this.dataPtr);
+            var data = GetData();
             data = change(data);
             Marshal.StructureToPtr(data, this.dataPtr, true);
+        }
+
+        private libraw_data_t GetData() {
+            return GetStructure<libraw_data_t>(this.dataPtr);
         }
 
         private static T GetStructure<T>(IntPtr ptr)
